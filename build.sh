@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e 
 
 if [ -z "${JAVA_HOME}" ]; then
     echo "JAVA_HOME needs to point to Java 14+"
@@ -19,9 +20,11 @@ HERE=$PWD
 echo "preparing resources.csv"
 mkdir build
 cd $RES_DIR
-find certificates -name *.crt -exec echo '{},{}' >> $HERE/build/resources.csv \;
+find certificates -name *.crt -exec echo '{},{},true' >> $HERE/build/resources.csv \;
+# TODO add others
 cd $HERE
-echo "geoip/GeoLite2-Country.mmdb,geoip/GeoLite2-Country.mmdb" >> build/resources.csv
+echo "geoip/GeoLite2-Country.mmdb,geoip/GeoLite2-Country.mmdb,true" >> build/resources.csv
+# TODO: decide on blocklist.txt
 
 echo "copying certificates"
 cp -R $RES_DIR/certificates build/

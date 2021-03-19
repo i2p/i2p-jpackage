@@ -61,6 +61,7 @@ public class PackageLauncher {
         String []split = description.split(",");
         String url = split[0];
         String target = split[1];
+        boolean overwrite = Boolean.parseBoolean(split[2]);
 
         var resource = PackageLauncher.class.getClassLoader().getResourceAsStream(url);
 
@@ -75,7 +76,8 @@ public class PackageLauncher {
         else if (!targetDir.isDirectory())
             throw new Exception(targetDir + " exists but not a directory.  Please get it out of the way");
 
-        Files.copy(resource, targetFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+        if (!targetFile.exists() || overwrite)
+            Files.copy(resource, targetFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
     }
 }
 

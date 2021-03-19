@@ -25,7 +25,7 @@ The I2P router expects to find some resources in specific places.  The legacy I2
    * All router certificates
    * GeoIP database
    * Custom Launcher
-1. Enumerate these resources and generate a file called `resources.csv`.  The format is CSV file where the first entry is the path that the classloader will use to locate the file, and the second entry is the path under the preferences directory where the resource should be copied.  Add this file in the .jar built in step 1.
+1. Enumerate these resources and generate a file called `resources.csv`.  The format is CSV file where the first entry is the path that the classloader will use to locate the file, the second entry is the path under the preferences directory where the resource should be copied, and the third entry indicates whether to overwrite any existing files (true|false).  Add this file in the .jar built in step 1.
 1. Use a custom main class `net.i2p.router.PackageLauncher` which reads the above list and copies each resource to the appropriate path under the current user's preferences directory, which is OS-dependent.
 1. The custom main class will also set any system properties necessary for I2P to work, then invoke the "real" main class `net.i2p.router.RouterLaunch`.
 1. The compiled custom main class gets added to the .jar as well.
