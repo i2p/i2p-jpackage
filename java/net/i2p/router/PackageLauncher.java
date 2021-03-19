@@ -55,7 +55,7 @@ public class PackageLauncher {
         } else {
             // All other platforms
             // TODO: Maybe. Determine if it's a service and return a different home.
-            i2p = new File(home, "i2p");
+            i2p = new File(home, "I2P");
         }
         return i2p.getAbsoluteFile();
     }
@@ -77,7 +77,7 @@ public class PackageLauncher {
             targetDir.mkdirs();
         else if (!targetDir.isDirectory())
             throw new Exception(targetDir + " exists but not a directory.  Please get it out of the way");
-
+	System.out.println(targetFile.toPath());
         Files.copy(resource, targetFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
     }
 }

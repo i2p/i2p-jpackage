@@ -12,19 +12,32 @@ rm -f *.exe
 rm -f *.dmg
 
 
-RES_DIR=../i2p.i2p/installer/resources
-I2P_JARS=../i2p.i2p/pkg-temp/lib
+
 HERE=$PWD
+RES_DIR=$HERE/../i2p.i2p/installer/resources
+I2P_JARS=$HERE/../i2p.i2p/pkg-temp/lib
+I2P_PKG=$HERE/../i2p.i2p/pkg-temp
+
 
 echo "preparing resources.csv"
 mkdir build
 cd $RES_DIR
 find certificates -name *.crt -exec echo '{},{}' >> $HERE/build/resources.csv \;
+cd small
+find . -name '*.config' -exec echo 'small/{},{}' >> $HERE/build/resources.csv \;
+echo "preparing webapps"
+cd $I2P_PKG
+find webapps -name '*.war' -exec echo '{},{}' >> $HERE/build/resources.csv \;
 cd $HERE
 echo "geoip/GeoLite2-Country.mmdb,geoip/GeoLite2-Country.mmdb" >> build/resources.csv
 
+sed -i 's|\./||g' build/resources.csv
+
 echo "copying certificates"
 cp -R $RES_DIR/certificates build/
+echo "copying config"
+cp -R $RES_DIR/small build/
+cp -R $I2P_PKG/webapps build/
 
 echo "copying GeoIP"
 mkdir build/geoip
@@ -39,7 +52,7 @@ cd ..
 
 echo "building launcher.jar"
 cd build
-$JAVA_HOME/bin/jar -cf launcher.jar net certificates geoip resources.csv
+$JAVA_HOME/bin/jar -cf launcher.jar net certificates geoip small webapps resources.csv
 cd ..
 
 echo "preparing to invoke jpackage"
