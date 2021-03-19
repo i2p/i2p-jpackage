@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e 
 
 if [ -z "${JAVA_HOME}" ]; then
     echo "JAVA_HOME needs to point to Java 14+"
@@ -17,15 +18,17 @@ I2P_PKG=$HERE/../i2p.i2p/pkg-temp
 echo "preparing resources.csv"
 mkdir build
 cd $RES_DIR
-find certificates -name *.crt -exec echo '{},{}' >> $HERE/build/resources.csv \;
+find certificates -name *.crt -exec echo '{},{},true' >> $HERE/build/resources.csv \;
 cd portable/configs
-find . -name '*.config' -exec echo 'config/{},{}' >> $HERE/build/resources.csv \;
-echo "config/hosts.txt,hosts.txt" >> $HERE/build/resources.csv
+find . -name '*.config' -exec echo 'config/{},{},false' >> $HERE/build/resources.csv \;
+echo "config/hosts.txt,hosts.txt,false" >> $HERE/build/resources.csv
 echo "preparing webapps"
 cd $I2P_PKG
-find webapps -name '*.war' -exec echo '{},{}' >> $HERE/build/resources.csv \;
+find webapps -name '*.war' -exec echo '{},{},true' >> $HERE/build/resources.csv \;
+# TODO add others
 cd $HERE
-echo "geoip/GeoLite2-Country.mmdb,geoip/GeoLite2-Country.mmdb" >> build/resources.csv
+echo "geoip/GeoLite2-Country.mmdb,geoip/GeoLite2-Country.mmdb,true" >> build/resources.csv
+# TODO: decide on blocklist.txt
 
 sed -i 's|\./||g' build/resources.csv
 
