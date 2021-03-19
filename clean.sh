@@ -12,4 +12,7 @@ rm -rfv \
 	peerProfiles \
 	prngseed.rnd \
 	router.config \
-	wrapper.log
+	wrapper.log \
+	*.jar \
+	*.exe \
+	*.dmg
