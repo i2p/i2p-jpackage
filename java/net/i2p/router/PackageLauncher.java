@@ -78,14 +78,9 @@ public class PackageLauncher {
             targetDir.mkdirs();
         else if (!targetDir.isDirectory())
             throw new Exception(targetDir + " exists but not a directory.  Please get it out of the way");
-<<<<<<< HEAD
-	System.out.println(targetFile.toPath());
-        Files.copy(resource, targetFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
-=======
 
         if (!targetFile.exists() || overwrite)
             Files.copy(resource, targetFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
->>>>>>> 52dbe4c90a0a27229bc391318dcd06254b6936e6
     }
 }
 
