@@ -32,13 +32,12 @@ cp $RES_DIR/GeoLite2-Country.mmdb.gz build/geoip
 gunzip build/geoip/GeoLite2-Country.mmdb.gz
 
 echo "compiling custom launcher"
-cp $I2P_JARS/{i2p,router}.jar build
+cp $I2P_JARS/*.jar build
 cd java
 $JAVA_HOME/bin/javac -d ../build -classpath ../build/i2p.jar:../build/router.jar net/i2p/router/PackageLauncher.java
 cd ..
 
 echo "building launcher.jar"
-#cp -R java/net build
 cd build
 $JAVA_HOME/bin/jar -cf launcher.jar net certificates geoip resources.csv
 cd ..
