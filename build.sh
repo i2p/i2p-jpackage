@@ -23,8 +23,8 @@ echo "preparing resources.csv"
 mkdir build
 cd $RES_DIR
 find certificates -name *.crt -exec echo '{},{}' >> $HERE/build/resources.csv \;
-cd small
-find . -name '*.config' -exec echo 'small/{},{}' >> $HERE/build/resources.csv \;
+cd portable/configs
+find . -name '*.config' -exec echo 'config/{},{}' >> $HERE/build/resources.csv \;
 echo "preparing webapps"
 cd $I2P_PKG
 find webapps -name '*.war' -exec echo '{},{}' >> $HERE/build/resources.csv \;
@@ -36,7 +36,7 @@ sed -i 's|\./||g' build/resources.csv
 echo "copying certificates"
 cp -R $RES_DIR/certificates build/
 echo "copying config"
-cp -R $RES_DIR/small build/
+cp -R $RES_DIR/portable/configs build/config
 cp -R $I2P_PKG/webapps build/
 
 echo "copying GeoIP"
@@ -52,7 +52,7 @@ cd ..
 
 echo "building launcher.jar"
 cd build
-$JAVA_HOME/bin/jar -cf launcher.jar net certificates geoip small webapps resources.csv
+$JAVA_HOME/bin/jar -cf launcher.jar net certificates geoip config webapps resources.csv
 cd ..
 
 echo "preparing to invoke jpackage"
