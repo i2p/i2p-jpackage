@@ -6,12 +6,7 @@ if [ -z "${JAVA_HOME}" ]; then
 fi
 
 echo "cleaning"
-rm -f *.jar
-rm -rf build
-rm -f *.exe
-rm -f *.dmg
-
-
+./clean.sh
 
 HERE=$PWD
 RES_DIR=$HERE/../i2p.i2p/installer/resources
