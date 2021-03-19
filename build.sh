@@ -45,4 +45,4 @@ cd ..
 
 echo "preparing to invoke jpackage"
 cp $I2P_JARS/*.jar build
-$JAVA_HOME/bin/jpackage --name I2P --input build --main-jar launcher.jar --main-class net.i2p.router.PackageLaunch
+$JAVA_HOME/bin/jpackage --name I2P --input build --main-jar launcher.jar --main-class net.i2p.router.PackageLauncher
