@@ -63,18 +63,22 @@ cd build
 $JAVA_HOME/bin/jar -cf launcher.jar net certificates geoip config webapps resources.csv
 cd ..
 
-VERSION=$($JAVA_HOME/bin/java -cp build/router.jar net.i2p.router.RouterVersion | sed "s/.*: //" | head -n 1)
+if [ -z $I2P_VERSION ]; then 
+    I2P_VERSION=$($JAVA_HOME/bin/java -cp build/router.jar net.i2p.router.RouterVersion | sed "s/.*: //" | head -n 1)
+fi
+echo "preparing to invoke jpackage for I2P version $I2P_VERSION"
 
-echo "preparing to invoke jpackage for I2P version $VERSION"
 cp $I2P_JARS/*.jar build
 cp "$I2P_PKG/Start I2P Router.app/Contents/Resources/i2p.icns" build/I2P.icns
+cp "$I2P_PKG/Start I2P Router.app/Contents/Resources/i2p.icns" build/I2P-volume.icns
 cp $I2P_PKG/LICENSE.txt build
 
 if [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
 	$JAVA_HOME/bin/jpackage --type app-image --name I2P --input build --main-jar launcher.jar --main-class net.i2p.router.PackageLauncher
 else
-	$JAVA_HOME/bin/jpackage --name I2P --app-version $VERSION \
+	$JAVA_HOME/bin/jpackage --name I2P --app-version $I2P_VERSION \
         --verbose \
+        $JPACKAGE_OPTS \
         --resource-dir build \
         --license-file build/LICENSE.txt \
         --input build --main-jar launcher.jar --main-class net.i2p.router.PackageLauncher
