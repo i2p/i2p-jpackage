@@ -38,7 +38,7 @@ cd $HERE
 echo "geoip/GeoLite2-Country.mmdb,geoip/GeoLite2-Country.mmdb,true" >> build/resources.csv
 # TODO: decide on blocklist.txt
 
-sed -i 's|\./||g' build/resources.csv
+sed -i.bak 's|\./||g' build/resources.csv
 
 echo "copying certificates"
 cp -R $RES_DIR/certificates build/
