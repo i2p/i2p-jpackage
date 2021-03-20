@@ -72,5 +72,6 @@ if [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
 	$JAVA_HOME/bin/jpackage --type app-image --name I2P --input build --main-jar launcher.jar --main-class net.i2p.router.PackageLauncher
 else
 	$JAVA_HOME/bin/jpackage --name I2P --app-version $VERSION \
+        --license-file $I2P_PKG/LICENSE.txt \
         --input build --main-jar launcher.jar --main-class net.i2p.router.PackageLauncher
 fi
