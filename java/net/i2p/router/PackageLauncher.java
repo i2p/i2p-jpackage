@@ -7,10 +7,10 @@ import java.nio.file.*;
 
 public class PackageLauncher {
     public static void main(String[]args) throws Exception {
-        if (!(SystemVersion.isWindows() || SystemVersion.isMac())) {
-            System.err.println("This launcher will work only on Windows or Mac");
-            System.exit(1);
-        }
+        //if (!(SystemVersion.isWindows() || SystemVersion.isMac())) {
+        //    System.err.println("This launcher will work only on Windows or Mac or Linux");
+        //    System.exit(1);
+        //}
 
         // 1. Select home directory
         File home = selectHome();
@@ -48,11 +48,14 @@ public class PackageLauncher {
             File library = new File(home, "Library");
             File appSupport = new File(library, "Application Support");
             i2p = new File(appSupport, "I2P");
-        } else {
-            // windows
+        } else if (SystemVersion.isWindows()) {
             File appData = new File(home, "AppData");
-            File roaming = new File(appData, "Roaming");
-            i2p = new File(roaming, "I2P");
+            File local = new File(appData, "Local");
+            i2p = new File(local, "I2P");
+        } else {
+            // All other platforms
+            // TODO: Maybe. Determine if it's a service and return a different home.
+            i2p = new File(home, "I2P");
         }
         return i2p.getAbsoluteFile();
     }
