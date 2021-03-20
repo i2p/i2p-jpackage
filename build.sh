@@ -67,11 +67,15 @@ VERSION=$($JAVA_HOME/bin/java -cp build/router.jar net.i2p.router.RouterVersion 
 
 echo "preparing to invoke jpackage for I2P version $VERSION"
 cp $I2P_JARS/*.jar build
+cp "$I2P_PKG/Start I2P Router.app/Contents/Resources/i2p.icns" build/I2P.icns
+cp $I2P_PKG/LICENSE.txt build
 
 if [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
 	$JAVA_HOME/bin/jpackage --type app-image --name I2P --input build --main-jar launcher.jar --main-class net.i2p.router.PackageLauncher
 else
 	$JAVA_HOME/bin/jpackage --name I2P --app-version $VERSION \
-        --license-file $I2P_PKG/LICENSE.txt \
+        --verbose \
+        --resource-dir build \
+        --license-file build/LICENSE.txt \
         --input build --main-jar launcher.jar --main-class net.i2p.router.PackageLauncher
 fi
