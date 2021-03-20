@@ -63,11 +63,14 @@ cd build
 $JAVA_HOME/bin/jar -cf launcher.jar net certificates geoip config webapps resources.csv
 cd ..
 
-echo "preparing to invoke jpackage"
+VERSION=$($JAVA_HOME/bin/java -cp build/router.jar net.i2p.router.RouterVersion | sed "s/.*: //" | head -n 1)
+
+echo "preparing to invoke jpackage for I2P version $VERSION"
 cp $I2P_JARS/*.jar build
 
 if [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
 	$JAVA_HOME/bin/jpackage --type app-image --name I2P --input build --main-jar launcher.jar --main-class net.i2p.router.PackageLauncher
 else
-	$JAVA_HOME/bin/jpackage --name I2P --input build --main-jar launcher.jar --main-class net.i2p.router.PackageLauncher
+	$JAVA_HOME/bin/jpackage --name I2P --app-version $VERSION \
+        --input build --main-jar launcher.jar --main-class net.i2p.router.PackageLauncher
 fi
