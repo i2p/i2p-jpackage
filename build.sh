@@ -75,10 +75,16 @@ cp "$I2P_PKG"/LICENSE.txt build
 
 if [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
 	"$JAVA_HOME"/bin/jpackage --type app-image --name I2P --input build --main-jar launcher.jar --main-class net.i2p.router.PackageLauncher
+elif uname | grep -i mingw; then
+	"$JAVA_HOME"/bin/jpackage --type app-image --name I2P --app-version "$I2P_VERSION" \
+        --verbose \
+        $JPACKAGE_OPTS \
+        --resource-dir build \
+        --input build --main-jar launcher.jar --main-class net.i2p.router.PackageLauncher
 else
 	"$JAVA_HOME"/bin/jpackage --name I2P --app-version "$I2P_VERSION" \
         --verbose \
-        "$JPACKAGE_OPTS" \
+        $JPACKAGE_OPTS \
         --resource-dir build \
         --license-file build/LICENSE.txt \
         --input build --main-jar launcher.jar --main-class net.i2p.router.PackageLauncher
