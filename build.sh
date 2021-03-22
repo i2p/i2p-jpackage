@@ -24,7 +24,7 @@ I2P_PKG="$HERE/../i2p.i2p/pkg-temp"
 
 
 echo "preparing resources.csv"
-mkdir build
+mkdir -p build
 cd "$RES_DIR"
 find certificates -name *.crt -exec echo '{},{},true' >> "$HERE"/build/resources.csv \;
 cd portable/configs
@@ -48,7 +48,7 @@ cp -R "$RES_DIR"/hosts.txt build/config/hosts.txt
 cp -R "$I2P_PKG"/webapps build/
 
 echo "copying GeoIP"
-mkdir build/geoip
+mkdir -p build/geoip
 cp "$RES_DIR"/GeoLite2-Country.mmdb.gz build/geoip
 gunzip build/geoip/GeoLite2-Country.mmdb.gz
 
