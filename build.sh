@@ -17,10 +17,10 @@ fi
 echo "cleaning"
 ./clean.sh
 
-HERE=$PWD
-RES_DIR=$HERE/../i2p.i2p/installer/resources
-I2P_JARS=$HERE/../i2p.i2p/pkg-temp/lib
-I2P_PKG=$HERE/../i2p.i2p/pkg-temp
+HERE="$PWD"
+RES_DIR="$HERE/../i2p.i2p/installer/resources"
+I2P_JARS="$HERE/../i2p.i2p/pkg-temp/lib"
+I2P_PKG="$HERE/../i2p.i2p/pkg-temp"
 
 
 echo "preparing resources.csv"
@@ -38,7 +38,7 @@ cd "$HERE"
 echo "geoip/GeoLite2-Country.mmdb,geoip/GeoLite2-Country.mmdb,true" >> build/resources.csv
 # TODO: decide on blocklist.txt
 
-sed -i 's|\./||g' build/resources.csv
+sed -i.bak 's|\./||g' build/resources.csv
 
 echo "copying certificates"
 cp -R "$RES_DIR"/certificates build/
@@ -63,11 +63,23 @@ cd build
 "$JAVA_HOME"/bin/jar -cf launcher.jar net certificates geoip config webapps resources.csv
 cd ..
 
-echo "preparing to invoke jpackage"
+if [ -z $I2P_VERSION ]; then 
+    I2P_VERSION=$($JAVA_HOME/bin/java -cp build/router.jar net.i2p.router.RouterVersion | sed "s/.*: //" | head -n 1)
+fi
+echo "preparing to invoke jpackage for I2P version $I2P_VERSION"
+
 cp "$I2P_JARS"/*.jar build
+cp "$I2P_PKG/Start I2P Router.app/Contents/Resources/i2p.icns" build/I2P.icns
+cp "$I2P_PKG/Start I2P Router.app/Contents/Resources/i2p.icns" build/I2P-volume.icns
+cp "$I2P_PKG"/LICENSE.txt build
 
 if [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
 	"$JAVA_HOME"/bin/jpackage --type app-image --name I2P --input build --main-jar launcher.jar --main-class net.i2p.router.PackageLauncher
 else
-	"$JAVA_HOME"/bin/jpackage --name I2P --input build --main-jar launcher.jar --main-class net.i2p.router.PackageLauncher
+	"$JAVA_HOME"/bin/jpackage --name I2P --app-version "$I2P_VERSION" \
+        --verbose \
+        "$JPACKAGE_OPTS" \
+        --resource-dir build \
+        --license-file build/LICENSE.txt \
+        --input build --main-jar launcher.jar --main-class net.i2p.router.PackageLauncher
 fi

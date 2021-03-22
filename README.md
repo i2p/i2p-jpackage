@@ -30,13 +30,12 @@ The I2P router expects to find some resources in specific places.  The legacy I2
 1. The custom main class will also set any system properties necessary for I2P to work, then invoke the "real" main class `net.i2p.router.RouterLaunch`.
 1. The compiled custom main class gets added to the .jar as well.
 
-JPackage gets invoked and pointed to the custom main class.  It's operation can be customized by editing the following files:
+JPackage gets invoked and pointed to the custom main class.  It's operation can be customized by setting the following environment variables:
 
-|File|Purpose|Example|
+|Variable|Purpose|Example|
 |---|---|---|
-|jlink.modules|Modules to forcibly include|`jdk.crypto.ec,jdk.unsupported`|
-|jpackage.mac|Custom JPackage options for Mac| `--mac-sign --mac-package-name I2P`|
-|jpackage.win|Same but for windows|??|
+|JPACKAGE_OPTS|Options to pass to jpackage, usualy OS-dependent|`--mac-sign`|
+|I2P_VERSION|Overrides the version from the `router.jar` file| `1.2.3`|
 
 
 
