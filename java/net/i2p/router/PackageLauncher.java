@@ -80,6 +80,7 @@ public class PackageLauncher {
             throw new Exception(targetDir + " exists but not a directory.  Please get it out of the way");
 
         if (!targetFile.exists() || overwrite)
+            System.out.println(targetFile.toPath());
             Files.copy(resource, targetFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
     }
 }

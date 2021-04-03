@@ -1,6 +1,6 @@
 #! /usr/bin/env sh
 
-rm -rfv \
+rm -rf \
 	build \
 	eventlog.txt \
 	hostsdb.blockfile \
