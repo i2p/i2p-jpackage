@@ -2,7 +2,23 @@
 
 ** This is work in progress.  Even this readme may change rapidly. **
 
-This project aims to contain scripts and code necessary to build all-in-one installers for Windows and Mac using the [JPackage] tool.
+** Work on this project has largely been moved to platform-specific repositories **
+
+Find them: 
+
+ - [Windows All-in-One Installer](https://i2pgit.org/i2p-hackers/i2p.firefox/) Gitlab Repository on i2pgit.org
+ - [Mac OSX .dmg Installer](https://i2pgit.org/i2p-hackers/i2p-jpackage-mac/) Gitlab Repository on i2pgit.org
+
+If you just want to get an experimental jpackaged router on Windows or Mac OSX,
+just visit this [Informational page](https://eyedeekay.github.io/i2p).
+
+If you want to use a `jpackaged` router on Linux you can use this repository,
+but there is no guarantee of support. There are at least a couple of things
+about the approach used here that are arguably more complicated than they
+need to be, and the configuration it uses is not ideal. You're probably much
+better off with a `.deb` package or a JVM and a `jar` install.
+
+This project aims to contain scripts and code necessary to build all-in-one installers for Windows, Mac, and Linux using the [JPackage] tool.
 
 ### Requirements
 
